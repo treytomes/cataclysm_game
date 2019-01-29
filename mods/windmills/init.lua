@@ -3,7 +3,7 @@ local windmill_entity = {
 	physical = true,
 	collisionbox = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
 	visual = "mesh",
-	mesh = "windmills_windmill.b3d",
+	mesh = "windmills_windmill.x",
 	visual_size = {x=1, y=1},
 	textures = {"windmills_windmill_3.png"},
 
@@ -17,13 +17,13 @@ local windmill_entity = {
 	--railtype = nil,
     --attached_items = {}
     
-    actions = {
+    --[[actions = {
         {
             name = "spin",
             start = 0,end = 100,
             rate = 24,
         },
-    },
+    },]]
 }
 
 function windmill_entity:on_rightclick(clicker)
@@ -41,7 +41,16 @@ function windmill_entity:on_rightclick(clicker)
 end
 
 function windmill_entity:on_activate(staticdata, dtime_s)
-    self.object:set_action("spin")
+    local start = 1
+    local finish = 100
+    local frame_speed = 24
+    local frame_blend = 0
+    local frame_loop = true
+    self.object:set_animation({x = start, y = finish}, frame_speed, frame_blend, frame_loop)
+    minetest.chat_send_all("Animating!!!")
+
+    --self.object:set_action("spin")
+
 	--[[self.object:set_armor_groups({immortal=1})
 	if string.sub(staticdata, 1, string.len("return")) ~= "return" then
 		return
